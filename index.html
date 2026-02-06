@@ -1,13 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Growing Button</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Simple Clicker</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="growingBtn">Click Me!</button>
-    <script src="script.js"></script>
+  <h1>Clicker Game</h1>
+
+  <p>Count: <span id="count">0</span></p>
+  <p>Multiplier: <span id="multiplierDisplay">1</span>x</p>
+
+  <button id="clickBtn">Click me</button>
+
+  <div class="controls">
+    <label>
+      Set multiplier:
+      <input type="number" id="multiplierInput" min="1" value="1">
+    </label>
+    <button id="setMultiplierBtn">Set</button>
+  </div>
+
+  <button id="resetBtn">Reset Game</button>
+
+  <script src="script.js"></script>
 </body>
 </html>
+let count = 0;
+let multiplier = 1;
+
+// Load saved data (so it remembers you)
+if (localStorage.getItem("count")) {
+  count = parseInt(localStorage.getItem("count"));
+}
+if (localStorage.getItem("multiplier")) {
+  multiplier = parseInt(localStorage.getItem("multiplier"));
+}
+
+const countSpan = document.getElementById("count");
+const multiplierSpan = document.getElementById("multiplierDisplay");
+
+function updateDisplay() {
+  countSpan.textContent = count;
+  multiplierSpan.textContent = multiplier;
+}
+
+// Click button
+document.getElementById("clickBtn").addEventListener("click", () => {
+  count += multiplier;
+  localStorage.setItem("count", count);
+  updateDisplay();
+});
+
+// Set multiplier
+document.getElementById("setMultiplierBtn").addEventListener("click", () => {
+  const value = parseInt(document.getElementById("multiplierInput").value);
+  if (value >= 1) {
+    multiplier = value;
+    localStorage.setItem("multiplier", multiplier);
+    updateDisplay();
+  }
+});
+
+// Reset game
+document.getElementById("resetBtn").addEventListener("click", () => {
+  count = 0;
+  multiplier = 1;
+  localStorage.clear();
+  updateDisplay();
+});
+
+updateDisplay();
