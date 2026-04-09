@@ -1,0 +1,24 @@
+async function getData() {
+  const response = await fetch('https://uselessfacts.jsph.pl/api/v2/facts/random');
+  const data = await response.json();
+  console.log(data);
+}
+
+async function getWeather() {
+  const response = await fetch('https://uselessfacts.jsph.pl/api/v2/facts/random');
+  const data = await response.json();
+  console.log(data.facts);
+
+  async function sendMessage() {
+  const messageData = { text: 'Hello!' };
+  
+  const response = await fetch('https://uselessfacts.jsph.pl/api/v2/facts/random', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(factData)
+  });
+  
+  const result = await response.json();
+}
